@@ -222,7 +222,7 @@ class ModelInspector(object):
     raw_images = [np.array(Image.open(f)) for f in all_files[:self.batch_size]]
     driver.benchmark(raw_images, trace_filename)
 
-  def saved_model_video(self, video_path: Text, output_video: Text, **kwargs):
+  def saved_model_video(self, video_input_path: Text, video_output_path: Text, **kwargs):
     """Perform video inference for the given saved model."""
     import cv2  # pylint: disable=g-import-not-at-top
 
@@ -234,14 +234,18 @@ class ModelInspector(object):
         model_params=self.model_config.as_dict())
     driver.load(self.saved_model_dir)
 
-    cap = cv2.VideoCapture(video_path)
+    videoList = os.listdir(video_input_path)
+    video_input = video_input_path +'/'+ videoList[0]
+    cap = cv2.VideoCapture(video_input)
     if not cap.isOpened():
-      print('Error opening input video: {}'.format(video_path))
+      print('Error opening input video: {}'.format(video_input_path))
+
+    
 
     out_ptr = None
-    if output_video:
+    if video_output_path:
       frame_width, frame_height = int(cap.get(3)), int(cap.get(4))
-      out_ptr = cv2.VideoWriter(output_video,
+      out_ptr = cv2.VideoWriter(video_output_path,
                                 cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 25,
                                 (frame_width, frame_height))
 
