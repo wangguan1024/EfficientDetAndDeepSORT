@@ -188,7 +188,7 @@ class ModelInspector(object):
         try:
           f = open(output_tensor_path, 'w+')
           f.write('detections_bs\n')
-          f.write(detections_bs)
+          np.savetxt(output_tensor_path, detections_bs)
           # f.write('\ndriver.visualize\n')
           # f.write(img)
         finally:
