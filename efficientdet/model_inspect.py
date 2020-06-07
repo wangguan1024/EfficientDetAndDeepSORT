@@ -188,7 +188,10 @@ class ModelInspector(object):
         try:
           f = open(output_tensor_path, 'w+')
           f.write('detections_bs\n')
-          np.savetxt(output_tensor_path, detections_bs)
+          f.write('# Array shape: {0}'.format(detections_bs.shape))
+          for data_slice in detections_bs:
+            np.savetxt(output_tensor_path, data_slice)
+            f.write('# New slice')
           # f.write('\ndriver.visualize\n')
           # f.write(img)
         finally:
