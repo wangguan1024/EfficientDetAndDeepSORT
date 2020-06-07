@@ -183,6 +183,17 @@ class ModelInspector(object):
         output_image_path = os.path.join(output_dir, img_id + '.jpg')
         Image.fromarray(img).save(output_image_path)
         logging.info('writing file to %s', output_image_path)
+        #输出向量
+        output_tensor_path = os.path.join(output_dir, img_id + '.txt')
+        try:
+          f = open(output_tensor_path, 'w+')
+          f.write('detections_bs\n')
+          f.write(detections_bs)
+          # f.write('\ndriver.visualize\n')
+          # f.write(img)
+        finally:
+          if f:
+            f.close()
 
   def saved_model_benchmark(self,
                             image_path_pattern,
