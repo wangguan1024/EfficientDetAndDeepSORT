@@ -146,7 +146,7 @@ class ModelInspector(object):
     driver.build()
     driver.export(self.saved_model_dir, self.tflite_path, self.tensorrt)
 
-  def saved_model_inference(self, image_path_pattern, output_dir, **kwargs):
+  def saved_model_inference(self, image_dir, output_dir, **kwargs):
     """Perform inference for the given saved model."""
     driver = inference.ServingDriver(
         self.model_name,
@@ -159,7 +159,7 @@ class ModelInspector(object):
 
     # Serving time batch size should be fixed.
     batch_size = self.batch_size or 1
-    all_files = list(tf.io.gfile.glob(image_path_pattern))
+    all_files = list(tf.io.gfile.listdir(image_dir))
     print('all_files=', all_files)
     num_batches = (len(all_files) + batch_size - 1) // batch_size
 
