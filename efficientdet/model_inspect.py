@@ -197,6 +197,7 @@ class ModelInspector(object):
                     f.write('detections_bs\n')
                     f.write('# Array shape: {0}\n'.format(
                         detections_bs.shape[j]))
+                    f.write('[image_id,ymin, xmin, ymax, xmax, score, class]')
                     np.savetxt(output_tensor_path, detections_bs[j])
                 finally:
                     if f:
